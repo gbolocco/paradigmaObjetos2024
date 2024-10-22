@@ -1,0 +1,42 @@
+import herenciaVsComposicion.*
+
+// import herenciaVsComposicion.Personaje.*
+
+// import herenciaVsComposicion.Mascota.*
+
+// import herenciaVsComposicion.Cazador.*
+// import herenciaVsComposicion.guerrero
+// import herenciaVsComposicion.brujo
+
+// import herenciaVsComposicion.Humano.*
+// import herenciaVsComposicion.Orco.*
+
+// import herenciaVsComposicion.Ejercito.*
+// import herenciaVsComposicion.Aldea.*
+// import herenciaVsComposicion.Ciudad.*
+// import herenciaVsComposicion.Zona.*
+
+
+describe "Test prueba" {
+
+  test "TEST DE PERSONAJES Y ROLES" {
+
+    const orco = new Orco(fuerza = 30, inteligencia = 10, rol = guerrero)
+    // orco.potencialOfensivo() debería ser 330
+    assert.equals(440, orco.potencialOfensivo())
+
+    const humano = new Humano(fuerza = 20, inteligencia = 60, rol = brujo)
+    // humano.esInteligente() debería ser true
+    assert.that(humano.esInteligente())
+
+    const mascota = new Mascota(fuerza = 50, edad = 12, tieneGarras = true)
+    const cazador = new Cazador(mascota = mascota)
+    const personaje = new Humano(fuerza = 40, inteligencia = 30, rol = cazador)
+
+    // personaje.potencialOfensivo() debería ser 500
+    assert.equals(500, personaje.potencialOfensivo())
+    // cazador.esGroso(personaje) debería ser true
+    assert.that(cazador.esGroso(personaje))
+
+  }
+}
