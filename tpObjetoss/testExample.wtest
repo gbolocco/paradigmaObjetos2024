@@ -1,0 +1,199 @@
+import example.*
+
+describe "TP Parte1, P1. Tests de Gandalf" {
+  const gandalf                 = new Maiar(vida = 100, armas = [new Espada(multiplicador = 10, origen = elfico), new Baculo(nivelDePoder = 400)])
+  const gandalfSinArmas         = new Maiar(vida = 80)
+  const gandalfPocaVida1        = new Maiar(vida = 5, armas = [new Baculo(nivelDePoder = 400)])
+  const gandalfPocaVida2        = new Maiar(vida = 30, armas = [new Espada(multiplicador = 10, origen = enano), new Baculo(nivelDePoder = 400)])
+  
+  test "Poder de Gandalf" {
+    assert.equals(2900 ,   gandalf.poder())
+    assert.equals(1200 ,   gandalfSinArmas.poder())
+    assert.equals(2300 ,   gandalfPocaVida1.poder())
+    assert.equals(1650 ,   gandalfPocaVida2.poder())
+  }
+}
+
+describe "P1 tests tom"{
+
+  method initialize() {
+    tomBombadil.pasar(lebennin)
+  }
+
+  test "1) puede pasar cualquier zona"{
+    assert.that(tomBombadil.puedePasar(lebennin))
+  }
+
+  test "2) no le sucede nada"{
+    assert.equals(tomBombadil.vida(), 100)
+    assert.equals(tomBombadil.poder(), 10000000)
+  }
+}
+
+describe "TP Parte 2, P1. Poder de armas" {
+  const espadaNueva =   new Espada(multiplicador = 15, origen = enano)
+  const dagaNueva   =     new Daga(multiplicador = 15, origen = enano)
+  const hachaNueva  =  new Hacha(largoDelMango = 50, pesoDeLahoja = 5)
+  const arcoNuevo   =                            new Arco(largo = 110)
+
+  method initialize() {
+    //arcoNuevo.tension(35)
+  }
+
+  test "Poder de las Armas" {
+    assert.equals(300 , espadaNueva.poder())
+    assert.equals(150 ,   dagaNueva.poder())
+    assert.equals(250 ,  hachaNueva.poder())
+    assert.equals(440 ,   arcoNuevo.poder())
+    //assert.equals(385, arcoNuevo.poder())
+  }
+}
+
+
+describe "TP P2, P2. Pruebas de los guerreros" {
+  const frodo    =                          new Hobbit(vida = 50)
+  const espadita = new Espada(multiplicador = 8, origen = elfico)
+
+  const gimli          =          new Enano(vida = 75, factorDePoder = 3)
+  const hachaDerecha   =  new Hacha(largoDelMango = 70, pesoDeLahoja = 5)
+  const hachaIzquierda =  new Hacha(largoDelMango = 70, pesoDeLahoja = 5)
+
+  const legolas          =         new Elfo(vida = 80, destrezaPropia = 1)
+  const arcoLegendario   =                           new Arco(largo = 110)
+  const espadaLegendaria = new Espada(multiplicador = 12, origen = elfico)
+  
+  const aragon    =    new Humano(vida = 85, limitadorDePoder = 20)
+  const anduril   = new Espada(multiplicador = 18, origen = elfico)
+  const dagaEnana =    new Daga(multiplicador = 10, origen = enano)
+
+  const gandalf       = new Maiar(vida = 100)
+  const glamdring     = new Espada(multiplicador = 10, origen = elfico)
+  const baculoSagrado = new Baculo(nivelDePoder = 400)
+
+  const gandalfHerido = new Maiar(vida = 9)
+  const legolasOP     =         new Elfo(vida = 80, destrezaPropia = 1)
+  
+  method initialize() {
+  frodo.armas().add(espadita)
+
+  gimli.armas().add(hachaDerecha)
+  gimli.armas().add(hachaIzquierda)  
+
+  legolas.armas().add(arcoLegendario)
+  legolas.armas().add(espadaLegendaria)
+
+  aragon.armas().add(anduril)
+  aragon.armas().add(dagaEnana)
+  
+  gandalf.armas().add(glamdring)
+  gandalf.armas().add(baculoSagrado)
+
+  gandalfHerido.armas().add(glamdring)
+  gandalfHerido.armas().add(baculoSagrado)
+  }
+
+
+  test "Poder de los guerreros" {
+    assert.equals(290 ,   frodo.poder())
+    assert.equals(2175,   gimli.poder())
+    assert.equals(2480, legolas.poder())
+    assert.equals(2720,  aragon.poder())
+    assert.equals(2900, gandalf.poder())
+    assert.equals(4100, gandalfHerido.poder())
+  }
+  
+}
+
+describe "Tests caminos 1"{
+  
+  var mariano = new Enano(vida = 75, factorDePoder = 2, items = ["lembas","capa elfica","capa elfica"])
+  var brandon = new Humano(vida = 100, limitadorDePoder = 20, items = ["lembas","lembas"])
+  var cris = new Maiar(vida = 100, items = ["lembas","lembas"])
+  var gian =  new Humano(vida = 100, limitadorDePoder = 20, items = ["lembas","lembas"])
+
+  const paradigmaticos = new GrupoGuerreros(guerreros = [mariano,brandon,cris,gian])
+
+  const caminoPrueba = new Camino(lugares=[lamedon,belfalas,lebennin,minasTirith])
+  const caminoPrueba2 = new Camino(lugares=[lamedon,belfalas,lebennin])
+
+  test "1) No pueden pasar por requerimiento de item"{ //
+    assert.that(!(paradigmaticos.puedenPasar(minasTirith)))
+  }
+  test "2) No pueden pasar por requerimiento de guerrero"{
+    assert.that(!(paradigmaticos.puedenPasar(bosqueDeFangorn)))
+  }
+  test "3) No pueden pasar por una zona"{
+    assert.that(!(paradigmaticos.puedenPasar(bosqueDeFangorn)))
+  }
+  test "4) No pueden pasar por un camino"{
+    assert.that(paradigmaticos.puedenPasarCamino(caminoPrueba))
+  }
+  test "5) Nueden pasar por un camino"{
+    assert.that(paradigmaticos.puedenPasarCamino(caminoPrueba2))
+  }
+}
+
+describe "Tests de Efecto de Zonas"{
+
+  const hachaDeMariano = new Hacha(pesoDeLahoja = 20, largoDelMango = 100)
+
+  var mariano = new Enano(vida = 75, factorDePoder = 2, items = ["lembas","capa elfica"], armas = [hachaDeMariano])
+  var brandon = new Humano(vida = 100, limitadorDePoder = 20, items = ["lembas","lembas"])
+  var cris = new Maiar(vida = 100, items = ["lembas","lembas"])
+  var gian =  new Humano(vida = 100, limitadorDePoder = 20, items = ["lembas","lembas"])
+
+  const paradigmaticos = new GrupoGuerreros(guerreros = [mariano,brandon,cris,gian])
+
+  const boromir = new Humano(vida = 20, limitadorDePoder = 5)
+
+  method initialize() {
+
+    paradigmaticos.pasarPorZona(bosqueDeFangorn)
+
+
+    boromir.pasar(pradosDeParthGalen)
+  }
+
+  test "1) Un grupo no puede atravesar una zona"{
+    assert.that(!(paradigmaticos.puedenPasar(minasTirith)))
+  }
+
+  test "2) Integrante pierde item"{
+    assert.that(!mariano.items().contains("capa elfica"))
+  }
+
+  test "3) Integrante no pierde item porque no lo posee"{
+    assert.that(!brandon.items().contains("capa elfica"))
+  }
+
+  test "4) Boromir queda fuera de combate luego de pasar por los pradosDeParthGalen"{
+    assert.that(boromir.fueraDeCombate())
+  }
+}
+
+// Test de Caminos
+describe "Tests Caminos"{
+
+  var pablo = new Enano(vida = 55, factorDePoder = 4)
+  var emanuel = new Humano(vida = 100, limitadorDePoder = 2)
+  var ivan = new Maiar(vida = 100)
+  
+  const amigos = new GrupoGuerreros(guerreros = [pablo, emanuel, ivan])
+
+  const caminoMalo = new Camino(lugares = [bosqueDeFangorn,lamedon, lebennin])
+
+  const caminoPrueba = new Camino(lugares=[bosqueDeFangorn, edoras, lamedon, belfalas, lebennin, minasTirith])
+
+  method initialize() {
+    //amigos.puedenPasarCamino(caminoMalo)
+  }
+
+  test "1) Un grupo que quiere atravesar un camino inválido debe producir un error"{  // como hacemos que tome la excepcion como test pasado? --> assert.thows
+    assert.that(amigos.puedenPasarCamino(caminoMalo))
+  }
+
+  test "2) regiones que atraviesa un camino"{
+    assert.equals(caminoPrueba.regionesQuePasa(),#{"rohan", "gondor"})
+  }
+
+}
