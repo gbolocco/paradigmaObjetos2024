@@ -1,0 +1,16 @@
+import example.*
+describe "group of tests" {
+
+   const cpu1 = new A105(usosAntesDeQuemarse=10)
+   const cpu2 = new A105(usosAntesDeQuemarse=5)
+
+   const cpu3 = new B2(usosAntesDeQuemarse=4,microchips=5)
+   const cpu4 = new B2(usosAntesDeQuemarse=4,microchips=7)
+
+  const laMaquina = new SuperComputadora(modo = standard, equipos = [cpu1,cpu2,cpu3,cpu4])
+
+  test "test" {
+    
+  }
+
+}
